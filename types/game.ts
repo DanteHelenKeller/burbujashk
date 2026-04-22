@@ -9,9 +9,9 @@ export type Frequency = "Pocas" | "Intermedio" | "Muchas";
 // ¡COLORES PUROS AL 100% DE SATURACIÓN PARA MÁXIMO CONTRASTE!
 export const COLORS: ColorType[] = [
   { id: "amarillo", name: "Amarillas", hex: "#FFFF00" }, // Amarillo Puro (Láser)
-  { id: "rosa", name: "Rosas", hex: "#FF00FF" },       // Magenta Puro (Fucsia Neón)
+  { id: "rosa", name: "Rosas", hex: "#ff004c" },       // Magenta Puro (Fucsia Neón)
   { id: "verde", name: "Verdes", hex: "#00FF00" },     // Verde Puro (Lima Reactivo)
-  { id: "celeste", name: "Celestes", hex: "#00FFFF" }, // Cian Puro (Celeste Eléctrico)
+  { id: "celeste", name: "Celestes", hex: "#0077ff" }, // Cian Puro (Celeste Eléctrico)
 ];
 
 export const SIZES: Record<Size, number> = { Mediano: 120, Grande: 180, Gigante: 250 };
