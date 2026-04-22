@@ -251,24 +251,22 @@ export default function CanvasNeonBubbles() {
   }, [gameStarted, gameLoop]);
 
   const handleStartGame = async () => {
-    const isMobile = typeof window !== "undefined" && (window.innerWidth <= 1024 || navigator.maxTouchPoints > 0);
-    if (isMobile) {
-      try {
-        const el = document.documentElement;
-        if (el.requestFullscreen) await el.requestFullscreen();
-        
-        // SOLUCIÓN 2: Apagamos el error de TypeScript para la API experimental de rotación
-        // ts-expect-error - La API lock es experimental y falla en algunas versiones de TypeScript
-        if (screen.orientation && screen.orientation.lock) {
-          // ts-expect-error - Apagamos el error en el método también
-          await screen.orientation.lock("landscape").catch(() => console.log("Rotación manual requerida"));
-        }
-      } catch { console.log("No se pudo forzar pantalla completa."); }
-    }
-    
-    gameState.current = { score: 0, level: 1, target: COLORS[0], bubbles: [], particles: [], texts: [], lastSpawn: performance.now(), bubbleIdCounter: 0, width: window.innerWidth, height: window.innerHeight };
-    setScore(0); setLevel(1); setGameStarted(true);
-  };
+  const isMobile = typeof window !== "undefined" && (window.innerWidth <= 1024 || navigator.maxTouchPoints > 0);
+  if (isMobile) {
+    try {
+      const el = document.documentElement;
+      if (el.requestFullscreen) await el.requestFullscreen();
+      
+      const orientation = screen.orientation as unknown as { lock?: (orientation: string) => Promise<void> };
+      if (orientation?.lock) {
+        await orientation.lock("landscape").catch(() => console.log("Rotación manual requerida"));
+      }
+    } catch { console.log("No se pudo forzar pantalla completa."); }
+  }
+  
+  gameState.current = { score: 0, level: 1, target: COLORS[0], bubbles: [], particles: [], texts: [], lastSpawn: performance.now(), bubbleIdCounter: 0, width: window.innerWidth, height: window.innerHeight };
+  setScore(0); setLevel(1); setGameStarted(true);
+};
 
   const handleExitGame = async () => {
     setGameStarted(false);
